@@ -1,0 +1,1 @@
+The main.py file will run the test function by default. If you want to denoise an image call the predict function and give either the directory name of a pair of images or the unique id of a directory (first 4 digits of the dir name)
