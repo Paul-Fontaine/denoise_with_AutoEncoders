@@ -27,9 +27,6 @@ def train():
 def test():
     model = GRDN.load_model('grdn_model.pth')
     model.test_model(test_loader, save_path='./outputs/test_results.png')
-    # ensemble_model = SelfEnsembleDenoisingModel(model)
-    # print('Ensemble Model test')
-    # ensemble_model.test_model(test_loader, save_path='./outputs/ensemble_test_results.png')
 
 
 def predict(dir_name:str|int = '0001_001_S6_00100_00060_3200_L'):
@@ -63,11 +60,15 @@ def predict(dir_name:str|int = '0001_001_S6_00100_00060_3200_L'):
     noisy_image = f'SIDD_Small_sRGB_Only/Data/{dir_name}/NOISY_SRGB_010.PNG'
     gt_image = f'SIDD_Small_sRGB_Only/Data/{dir_name}/GT_SRGB_010.PNG'
     denoised_image = './outputs/denoised.PNG'
+    import time
+    start = time.time()
     base_model.denoise_image(noisy_image, save_path=denoised_image)
-    print('Denoised image saved at:', denoised_image)
+    # print the time taken to denoise the image
+    print(f'time taken to denoise the image: {time.time() - start:.2f} seconds')
+    # print('Denoised image saved at:', denoised_image)
 
     plot_predict(noisy_image, gt_image, denoised_image)
 
 
 if __name__ == '__main__':
-    train()
+    test()
