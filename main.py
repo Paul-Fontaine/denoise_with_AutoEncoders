@@ -2,7 +2,6 @@ import os
 from matplotlib import pyplot as plt
 from custom_dataset import CustomDataset
 from GRDN import GRDN
-from SelfEnsembleDenoisingAutoEncoder import SelfEnsembleDenoisingModel
 
 dataset = CustomDataset('dataset.csv')
 train_loader, val_loader, test_loader = dataset.get_loaders(batch_size=4)
@@ -55,7 +54,6 @@ def predict(dir_name:str|int = '0001_001_S6_00100_00060_3200_L'):
             ax.axis('off')
         plt.show()
     base_model = GRDN.load_model('grdn_model.pth')
-    ensemble_model = SelfEnsembleDenoisingModel(base_model)
 
     noisy_image = f'SIDD_Small_sRGB_Only/Data/{dir_name}/NOISY_SRGB_010.PNG'
     gt_image = f'SIDD_Small_sRGB_Only/Data/{dir_name}/GT_SRGB_010.PNG'
@@ -63,9 +61,7 @@ def predict(dir_name:str|int = '0001_001_S6_00100_00060_3200_L'):
     import time
     start = time.time()
     base_model.denoise_image(noisy_image, save_path=denoised_image)
-    # print the time taken to denoise the image
     print(f'time taken to denoise the image: {time.time() - start:.2f} seconds')
-    # print('Denoised image saved at:', denoised_image)
 
     plot_predict(noisy_image, gt_image, denoised_image)
 
