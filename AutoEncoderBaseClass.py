@@ -160,4 +160,4 @@ class AutoEncoderBaseClass(nn.Module):
         # disable future warnings
         import warnings
         warnings.simplefilter(action='ignore', category=FutureWarning)
-        return torch.load(path)
+        return torch.load(path, map_location=torch.device("cuda" if torch.cuda.is_available() else "cpu"), weights_only=False)
